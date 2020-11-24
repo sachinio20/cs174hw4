@@ -85,18 +85,30 @@ if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg
 }
 
 function GenerateImages($target_dir,$FileName){
-$viewLoad ="";
-  $im = imagecreatefromjpeg($target_dir.$FileName);
+$viewLoadString =[];
+//   $im = imagecreatefromjpeg($target_dir.$FileName);
+// $counter = 0;
+//   for($j = 0; $j<=2; $j++){
+//     for($i = 0; $i<=2; $i++){
+//     $im2 = imagecrop($im, ['x' => 120*$i, 'y' => 120*$j, 'width' => 120, 'height' => 120]);
+//     imagejpeg($im2,$target_dir.$i.$j.'.jpg', 100);
+//     $viewLoadString [$counter]= "<div onclick='ClickTile(this);' style='background-image:url(".$target_dir.$i.$j.'.jpg'.");height:120px;width:120px;display:inline-block;border:1px solid black;'></div>&nbsp;";
+//   $counter++;
+// }
+// }
 
-  for($j = 0; $j<=2; $j++){
-    for($i = 0; $i<=2; $i++){
-    $im2 = imagecrop($im, ['x' => 120*$i, 'y' => 120*$j, 'width' => 120, 'height' => 120]);
-    imagejpeg($im2,$target_dir.$i.$j.'.jpg', 100);
-$viewLoad = $viewLoad."<div style='background-image:url(".$target_dir.$i.$j.'.jpg'.");height:120px;width:120px;display:inline-block;border:1px solid black;'></div>&nbsp;";
+$numbers = range(0, 8);
+shuffle($numbers);
+$view = "";
+$counter = 0;
+foreach($numbers as $number){
+  $view = $view.'<div class="image'.($number+1).'" onclick="ClickTile(this);"></div>&nbsp;';
+  if($counter == 2 || $counter == 5){
+    $view = $view.'<br>';  
   }
-  $viewLoad = $viewLoad."<br />";
+  $counter++;
 }
-echo($viewLoad);
+echo($view);
 }
 
 ?>
